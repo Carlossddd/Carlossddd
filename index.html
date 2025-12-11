@@ -183,86 +183,8 @@
 </div>
 
     <!-- JAVASCRIPT -->
-    <script>
-        /* Mantengo la función createAvatar por compatibilidad, pero ya no se usa
-           para los personajes principales que tú especificaste. */
-        const createAvatar = (emoji, bgColor) => {
-            return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' style='background-color:${bgColor}'%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-size='60'%3E${emoji}%3C/text%3E%3C/svg%3E`;
-        };
-
-        // BLOQUE characterData con las rutas que me pediste (exactas)
-        const characterData = [
-            { id: 'luffy', name: 'Monkey D. Luffy', role: 'Capitán', img: "img/LUFFY S.png", desc: 'El hombre que se convertirá en el Rey de los Piratas. Comedor de la Fruta Hito Hito: Modelo Nika. Su espíritu indomable atrae a aliados y aterroriza a la Marina.', dream: 'Encontrar el One Piece y ser libre.', fruit: 'Hito Hito no Mi (Zoan Mítica - Nika)', bounty: '฿ 3,000,000,000' },
-            { id: 'zoro', name: 'Roronoa Zoro', role: 'Espadachín', img: "img/ZORO.webp", desc: 'Maestro del estilo de tres espadas (Santoryu). Aspira a superar a Dracule Mihawk. Posee una lealtad absoluta hacia su capitán.', dream: 'Ser el mejor espadachín del mundo.', fruit: 'Ninguna (Haki Avanzado)', bounty: '฿ 1,111,000,000' },
-            { id: 'nami', name: 'Nami', role: 'Navegante', img: "img/Nami png.png", desc: 'La navegante capaz de predecir ciclones con su cuerpo. Lucha usando el clima con su bastón Clima-Tact creado por Usopp.', dream: 'Dibujar el mapa del mundo entero.', fruit: 'Ninguna (Arma Climática)', bounty: '฿ 366,000,000' },
-            { id: 'usopp', name: 'Usopp', role: 'Francotirador', img: "img/Usopp.webp", desc: 'Hijo de Yasopp. Mentiroso compulsivo pero francotirador genial. Despertó su Haki de Observación para salvar a su capitán.', dream: 'Ser un valiente guerrero del mar.', fruit: 'Ninguna (Haki Observación)', bounty: '฿ 500,000,000' },
-            { id: 'sanji', name: 'Vinsmoke Sanji', role: 'Cocinero', img: "img/SANJI.webp", desc: 'Príncipe del Germa 66 que renegó de su familia. Un chef que nunca usará sus manos para pelear. Su patada puede destruir edificios.', dream: 'Encontrar el All Blue.', fruit: 'Ninguna (Exoesqueleto Germa)', bounty: '฿ 1,032,000,000' },
-            { id: 'chopper', name: 'Tony Tony Chopper', role: 'Médico', img: "img/choppr san.png", desc: 'Un reno de nariz azul que comió la Fruta Humano-Humano. Un genio médico que puede transformarse en varias formas (Monster Point).', dream: 'Curar todas las enfermedades.', fruit: 'Hito Hito no Mi (Zoan)', bounty: '฿ 1,000' },
-            { id: 'robin', name: 'Nico Robin', role: 'Arqueóloga', img: "img/Nico_Robin.webp", desc: 'La única persona viva capaz de leer los Poneglyphs para encontrar la ruta a Laugh Tale. Sobreviviente del genocidio de Ohara.', dream: 'Descubrir la Historia del Siglo Vacío.', fruit: 'Hana Hana no Mi (Paramecia)', bounty: '฿ 930,000,000' },
-            { id: 'franky', name: 'Franky', role: 'Carpintero', img: "img/Franky_OnePiece.webp", desc: 'Un cyborg alimentado con cola. Construyó el Thousand Sunny con la madera legendaria del Árbol Adam.', dream: 'Que su barco navegue todos los mares.', fruit: 'Ninguna (Tecnología Láser)', bounty: '฿ 394,000,000' },
-            { id: 'brook', name: 'Brook', role: 'Músico', img: "img/Soul_King_Brook.png", desc: 'Un esqueleto viviente. Músico y espadachín que congela con el frío del inframundo. Espera cumplir su promesa a Laboon.', dream: 'Reunirse con Laboon.', fruit: 'Yomi Yomi no Mi (Paramecia)', bounty: '฿ 383,000,000' },
-            { id: 'jinbe', name: 'Jinbe', role: 'Timonel', img: "img/jim.webp", desc: 'Ex-Shichibukai y maestro del Karate Gyojin. Un hombre de honor que sirve de escudo y timonel para el Rey de los Piratas.', dream: 'Igualdad entre Humanos y Gyojin.', fruit: 'Ninguna (Karate Gyojin)', bounty: '฿ 1,100,000,000' }
-        ];
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // SELECTOR del contenedor grid dentro de #personajes
-            const grid = document.querySelector('#personajes .grid');
-            const modal = document.getElementById('character-modal');
-
-            // Generar tarjetas
-            characterData.forEach(char => {
-                const card = document.createElement('div');
-                card.className = 'wanted-poster cursor-pointer group bg-opacity-90 hover:bg-opacity-100';
-                card.innerHTML = `
-                    <div class="wanted-header">WANTED</div>
-                    <div class="wanted-sub">DEAD OR ALIVE</div>
-                    <div class="overflow-hidden border-2 border-gray-800 bg-gray-200 aspect-[4/5] relative">
-                        <img src="${char.img}" alt="${char.name}" class="w-full h-full object-cover filter sepia contrast-125 group-hover:sepia-0 transition-all duration-500">
-                    </div>
-                    <div class="mt-3 text-center">
-                        <h3 class="font-pirate text-xl text-gray-900 uppercase truncate px-1 tracking-wide">${char.name.split(' ')[0]}</h3>
-                        <p class="font-wanted text-lg font-bold text-gray-800 border-t border-gray-400 mt-1 pt-1">${char.bounty}</p>
-                    </div>
-                `;
-                card.addEventListener('click', () => openModal(char));
-                grid.appendChild(card);
-            });
-
-            function openModal(char) {
-                // Pongo la ruta directamente en el modal
-                const modalImg = document.getElementById('modal-img');
-                modalImg.src = char.img;
-                modalImg.alt = char.name;
-
-                document.getElementById('modal-name').textContent = char.name;
-                document.getElementById('modal-name-poster').textContent = char.name; 
-                document.getElementById('modal-role').textContent = char.role;
-                document.getElementById('modal-desc').textContent = char.desc;
-                document.getElementById('modal-dream').textContent = char.dream;
-                document.getElementById('modal-fruit').textContent = char.fruit;
-                document.getElementById('modal-bounty-poster').textContent = char.bounty; 
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
-            }
-
-            const closeModal = () => {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-            };
-
-            document.getElementById('modal-close-btn').addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => {
-                if(e.target === modal) closeModal();
-            });
-
-            const btn = document.getElementById('mobile-menu-btn');
-            const menu = document.getElementById('mobile-menu');
-            btn.addEventListener('click', () => menu.classList.toggle('hidden'));
-            menu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => menu.classList.add('hidden'));
-            });
-        });
-    </script>
+    <script src="index.js"></script>
 </body>
 </html>
+
 
